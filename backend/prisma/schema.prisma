@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+// testing inside the postgres docker container 
+// -> docker exec -it containername bash 
+// -> psql -U postgres -d postgres
+// -> \l
+// -> \c postgres
+// -> \dt
+
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id               Int       @id @default(autoincrement())
+  username         String    @unique
+  password         String
+  purchasedCourses Course[] 
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+}
+
+model Course {
+  id               Int       @id @default(autoincrement())
+  title            String
+  description      String
+  price            String
+  imageLink        String
+  published        Boolean
+  purchasers       User[]    
+}

@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: postgres
+      POSTGRES_DB: course_app
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - course_app
+
+  backend:
+    build:
+      context: .
+    container_name: course_app_backend
+    ports:
+      - "3000:3001"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:mysecretpassword@postgres:5432/course_app
+    networks:
+      - course_app
+    volumes:
+      - .:/usr/src/app
+
+volumes:
+  postgres-db:
+
+networks:
+  course_app_backend_network:

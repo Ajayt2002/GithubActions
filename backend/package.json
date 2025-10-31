@@ -1,0 +1,27 @@
+{
+  "name": "backend2",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+        "dev": "bunx prisma migrate dev && bun --watch index.ts",
+        "build": "bun build ./index.ts --outdir dist",
+        "start": "bunx prisma migrate deploy && bun run dist/index.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.13.0"
+  }
+}
